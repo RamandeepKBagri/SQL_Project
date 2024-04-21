@@ -1,4 +1,4 @@
-# This is one of SQL Database design project for ITM/MSBA/304 class at Golden Gate University: 
+This is one of SQL Database design project for ITM/MSBA/304 class at Golden Gate University: 
 
 # Name of the project:
 DESIGN DATABASE FOR ZOO
