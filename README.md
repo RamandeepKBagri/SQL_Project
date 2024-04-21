@@ -1,4 +1,13 @@
-# Design Database for Zoo
+# This is one of SQL Database design project for ITM/MSBA/304 class at Golden Gate University: 
+
+# Name of the project:
+DESIGN DATABASE FOR ZOO
+ITM/MSBA/304
+
+# It was a team project:
+RAMANDEEP KAUR BAGRI | AMARPREET KAUR DHANOA
+
+# Here is the description of the project:
 This project focuses on the zoo database designing. Initially before designing, zoo analysis is done with expert domain, here in our database designing domain expert is Prof Hellen, Golden gate University. Such analysis gave directions to have required specifications in the designing.
 
 During analysis and planning, we came with following description of zoo and its architecture. Zoo have many animals and each animal is distinguished by animal ID. Each animal ID have one keeper. Keeper is the caretaker of the animal who feeds the animal. Keeper can have many animals to feed in the week. Each Keeper works 40 hours per week. Each keeper is assigned to the animal IDs that he has to feed in a day. Each keeper has to feed 4 animals in their shift. Animals live in their own cages. Cages are defined by size their cage ID’s.
