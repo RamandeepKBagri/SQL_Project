@@ -1,0 +1,217 @@
+# Below is the planning and coding for the database (development of the database is not added here). 
+
+Unordered collections of tuples (Curino & Micheal, n.d.)
+State(StateID, City, ZipCode)
+Zoo(ZooID, ZooName, ZooDesc)
+ZooVisitor(ZooVisitorID, ZooVisdate, ZooVisTime, ZooVisName, ZooVisAddress)
+Animals(animalID, name, species, age, CageID)
+Cages(Cageid, Cagesize, CageLocation)
+Keepers(Keeperid, Name, Address)
+CareSchedule(CareScheduleID, CareTime, CareDate, AnimalID, KeeperID)
+AdoptionCenter(AdoptionCenterID, ZooVisitorID, AnimalID)
+
+Name of database: rbagri
+
+CREATE TABLES FOR THE DATABASE: 
+CREATE STATE TABLE:
+CREATE TABLE prjct_state(StateID INTEGER PRIMARY KEY AUTO_INCREMENT, city CHAR(50) NOT NULL, stateName CHAR(50) NOT NULL, zipcode INT(50) NOTNULL)
+
+CREATE ZOO TABLE:
+CREATE TABLE prjct_zoo (ZooID INTEGER PRIMARY KEY AUTO_INCREMENT, zooName VARCHAR(50) NOT NULL, Zoo Desc INT NOT NULL, StateID INT NOT NULL, FOREIGN KEY (stateID) REFERENCES prjct_state(StateID))
+
+CREATE KEEPERS TABLE: 
+CREATE TABLE prjct_keepers(keeperID INTEGER PRIMARY KEY AUTO_INCREMENT, KeeperName CHAR(50) NOT NULL, KeeperGender CHAR(10) NOT NULL, KeeperAddress VARCHAR(100) NOT NULL)
+
+CREATE ANIMAL TABLE:
+CREATE TABLE prjct_animal(AnimalID INTEGER PRIMARY KEY AUTO_INCREMENT, AnimalSpecies Character NOT NULL, AnimalAge INT NOT NULL)
+
+CREATE Care Schedule Table:
+CREATE TABLE prjct_careSchedule(CareScheduleID INTEGER PRIMARY KEY AUTO_INCREMENT, CareTime TIME NOT NULL, CareDate DATE NOT NULL, AnimalID INT NOT NULL, FOREIGN KEY (AnimalID) REFERENCES prjct_animal(AnimalID), keeperID INT NOT NULL, FOREIGN KEY (keeperID) REFERENCES prjct_keepers(keeperID))
+
+CREATE CAGE TABLE:
+CREATE TABLE prjct_cages(CageID INTEGER PRIMARY KEY AUTO_INCREMENT, CageSize INT NOT NULL, CareLocation VARCHAR(200) NOT NULL, AnimalID INT NOT NULL, ForeignKey(AnimalID) REFERENCES prjct_animal(AnimalID))
+
+CREATE ZOO VISITOR TABLE:
+CREATE TABLE prjct_ZooVisitor(ZooVisitorID INTEGER PRIMARY KEY AUTO_INCREMENT, ZooVisName CHAR NOT NULL, ZOOVisAddress VARCHAR(200) NOT NULL, ZooVisDate DATE NOT NULL, ZooVisTime NOT NULL, ZooID INT NOT NULL, FOREIGN KEY (ZooID) REFERENCES prjct_zoo(ZooID))
+
+CREATE LOCATION TABLE:
+CREATE TABLE prjct_location(LocationID INTEGER PRIMARY KEY AUTO_INCREMENT,LocationDesc CHAR NOT NULL,ZooID int NOT NULL, FOREIGN KEY (ZooID) REFERENCESprjct_zoo(ZooID))
+
+CREATE ADOPTION CENTER TABLE:
+CREATE TABLE prjct_AdoptionCenter(AdoptionCenterID INTEGER PRIMARY KEY AUTO_INCREMENT,AdoptionDate DATE NOT NULL,ZooVisitorID int NOT NULL, FOREIGN KEY (ZooVisitorID)REFERENCES prjct_ZooVisitor(ZooVisitorID), AnimalID int NOT NULL, FOREIGN KEY (AnimalID) REFERENCES prjct_animal(AnimalID))
+
+UPDATE CARE SCHEDULE TABLE:
+create table caretest as select * from prjct_careSchedule
+update caretest set CareScheduleID = CareScheduleID +200
+update caretest set CareDate = date_add(CareDate, interval 1 year)
+Insert into prjct_careSchedule select * from caretest
+update caretest set CareDate = date_add(CareDate, interval -20 year)
+update caretest set CareDate = date_add(CareDate, interval 7 day)
+update caretest set CareDate = date_add(CareDate, interval 5 month)
+update caretest set CareScheduleID = CareScheduleID +25
+update caretest set CareScheduleID = CareScheduleID +107
+
+UPDATE ZOO VISITOR TABLE QUERIES:
+create table zoovisitortest as select * from prjct_ZooVisitor
+update zoovisitortest set ZooVisDate = date_add(ZooVisDate, interval -20 year)
+update zoovisitortest set ZooVisitorID = ZooVisitorID +177
+UPDATE zoovisitortest SET ZooVisTime = DATE_ADD(ZooVisTime, INTERVAL (2 - HOUR(ZooVisTime)) HOUR);
+
+UPDATE NAME QUERIES (sample of few queries):
+UPDATE zoovisitortest SET ZooVisName ='Aq Zy' WHERE ZooVisitorID='226' UPDATE zoovisitortest SET ZooVisName ='Sq Ey' WHERE ZooVisitorID='417' UPDATE zoovisitortest SET ZooVisName ='Pq My' WHERE ZooVisitorID='418' UPDATE zoovisitortest SET ZooVisName ='Sq Ki' WHERE ZooVisitorID='419' UPDATE zoovisitortest SET ZooVisName ='Yt Fi' WHERE ZooVisitorID='420'
+Update zoovisitortest SET ZooVisName ='Dc Vi' WHERE ZooVisitorID='421'
+
+UPDATE ADDRESS QUERIES (sample of few queries):
+UPDATE zoovisitortest SET ZooVisAddress ='12 st thy san jose 95167' WHERE ZooVisitorID='226'
+UPDATE zoovisitortest SET ZooVisAddress ='13 st thto san jose 95167' WHERE ZooVisitorID='227'
+UPDATE zoovisitortest SET ZooVisAddress ='14 st thd san jose 95168' WHERE ZooVisitorID='228'
+UPDATE zoovisitortest SET ZooVisAddress ='15 st tuit san jose 95149' WHERE ZooVisitorID='229'
+UPDATE zoovisitortest SET ZooVisAddress ='16 st tuit san bruno 95149' WHERE ZooVisitorID='230'
+UPDATE zoovisitortest SET ZooVisAddress ='17 st tuit san bruno 92330' WHERE ZooVisitorID='232'
+UPDATE zoo vistor table using ZOO VISITOTOR 32 TEST
+UPDATE zoovisitor32test set ZooVisDate = date_add(ZooVisDate, interval 1 year) UPDATE zoovisitor32test set ZooVisitorID = ZooVisitorID +279
+UPDATE zoovisitor32test SET ZooVisName ='Qo De' WHERE ZooVisitorID='330' UPDATE zoovisitor32test SET ZooVisAddress ='123 st ninja san BRUNO
+96575' WHERE ZooVisitorID='330'
+
+CREATED zoovisitor64 ttable to multiply the data:
+UPDATE zoovisitor64test set ZooVisDate = date_add(ZooVisDate, interval +2 year) UPDATE zoovisitor64test SET ZooVisTime = DATE_ADD(ZooVisTime, INTERVAL (11 - HOUR(ZooVisTime)) HOUR);
+UPDATE zoovisitortest SET ZooVisName ='Di Hu' WHERE ZooVisitorID='607' UPDATE zoovisitor64test SET ZooVisName ='Oi HP' WHERE ZooVisitorID='609'
+
+BELOW ARE THE QUESTIONS AND QUERIES:
+Which animal is popular for adoption?
+SQL QUERY:
+SELECT AnimalID,COUNT(*) FROM prjct_AdoptionCenter GROUP BY AnimalID
+ORDER BY COUNT(*) DESC;
+
+How many animals need feeding AFTER 6AM?
+SQL QUERY:
+select DISTINCT AnimalSpecies , CareTime from prjct_animal a, prjct_careSchedule c where a.AnimalID = c.AnimalID
+AND CareTime > '6:00AM' LIMIT 0, 25 ;
+
+Display Zoo visitors information who did adoption with their visiting date and adoption date?
+SQL QUERY:
+SELECT n.ZooVisName, n.ZooVisAddress, n.ZooVisDate,s.AdoptionDate FROM prjct_ZooVisitor n
+JOIN prjct_AdoptionCenter s
+Where n.ZooVisitorID = s.ZooVisitorID LIMIT 0, 25 ;
+
+Which month is popular for visitors?
+SQL QUERY:
+Select MONTH (ZooVisDate), count(1) from prjct_ZooVisitor
+group by 1 LIMIT 0, 25 ;
+
+How many visitors are in zoo per year?
+SQL QUERY:
+Select year(ZooVisDate), count(1) from prjct_ZooVisitor
+group by 1 LIMIT 0, 25 ;
+
+Display adoptions per year?
+SQL QUERY:
+Select year (AdoptionDate), count(1) from prjct_AdoptionCenter
+group by 1 LIMIT 0, 25 ;
+
+Display Popular month for adoption?
+SQL QUERY:
+Select month (AdoptionDate), count(1) from prjct_AdoptionCenter
+group by 1 LIMIT 0, 25 ;
+
+Display number of dates of special cares each year
+SQL QUERY:
+Select year (CareDate), count(1) from prjct_careSchedule
+group by 1 LIMIT 0, 25 ;
+
+Display data for each animal species with keeper name and their care year?
+SQL QUERY:
+SELECT distinct k.KeeperName, a.AnimalSpecies,
+YEAR(c.CareDate) AS careYear
+From prjct_careSchedule c, prjct_keepers k, prjct_animal a
+WHERE a.AnimalID= c.AnimalID and c.keeperID = k.keeperID LIMIT 0, 25;
+
+Display thank you message to visitors
+SQL QUERY:
+SELECT ZooVisAddress, CONCAT( ' To Dear ', ZooVisName, ' thank you for visiting the Zoo. ') AS Visitor_Text FROM rbagri.prjct_ZooVisitor LIMIT 0, 25 ; Rows: 25;
+
+Count adoption centers per location ?
+SQL QUERY:
+Select LocationDesc, count(1) from prjct_location
+group by 1 LIMIT 0, 25;
+
+Display names of animal species, care time and keeper name?
+SQL QUERY:
+SELECT DISTINCT a.AnimalSpecies, cs.CareTime, c.CareLocation, k.KeeperName FROM prjct_animal a, prjct_careSchedule cs, prjct_cages c, prjct_keepers k WHERE a.AnimalID = cs.AnimalID and cs.AnimalID = c.AnimalID and cs.keeperID=k.keeperID LIMIT 0, 25 ;
+
+Display animal species, adoption date and zoo visitor name
+SQL QUERY:
+select a.AnimalSpecies, ap.AdoptionDate, v.ZooVisName
+from prjct_animal a, prjct_AdoptionCenter ap, prjct_ZooVisitor v where a.AnimalID = ap.AnimalID and
+ap.ZooVisitorID = v.ZooVisitorID LIMIT 0, 25 ;
+
+Show the count of keepers taking care of animals and at what time?
+SQL QUERY:
+Select count(5) as NumberOfTimesKeeperTakeCare, KeeperName, CareTime from prjct_careSchedule , prjct_keepers
+where prjct_careSchedule.keeperID = prjct_keepers.keeperID
+group by 2,3 LIMIT 0, 25 ;
+
+Display schedule for keeper Aia Mu? Or
+Display keeprName = Aia Mu, ANimalID, CareTime, Caredate, LocationID, CageLocation
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "17" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID LIMIT 0, 25 ;
+
+Display care schedule for Zia Qi?
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "18" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID;
+
+Display schedule for Sia Ty
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "19" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID ;
+
+Display schedule for Dia Si
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "20" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID;
+
+Display schedule for Hia Ru
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "21" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID;
+
+Display schedule for Kia Qi
+SQL QUERY:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "22" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID;
+
+Display schedule for Wia Ci
+SQL QUERY: 
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation from prjct_keepers k, prjct_careSchedule cs, prjct_cages c where k.KeeperID= "23" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID LIMIT 0, 100 ;
+
+Display schedule for Qia Yu
+SQL query:
+Select k.KeeperName, cs.AnimalID, cs.CareTime, cs.CareDate, c.CareLocation
+from prjct_keepers k, prjct_careSchedule cs, prjct_cages c
+where k.KeeperID= "24" and cs.AnimalID = c.AnimalID and cs.keeperID = k.keeperID LIMIT 0, 25 ;
+
+Display count of working day of each keeper in each (2000-2019) year?
+SQL query:
+SELECT year(CareDate), keeperName, count(*)
+from prjct_careSchedule, prjct_keepers
+where prjct_careSchedule.keeperID = prjct_keepers.keeperID group by 1,2;
+
+ Display keeper name who takes care of which animal species in year from (2000-2019)?
+SQL QUERY:
+SELECT distinct k.KeeperName, a.AnimalSpecies, YEAR(c.CareDate) AS careYear From prjct_careSchedule c, prjct_keepers k, prjct_animal a
+WHERE a.AnimalID = c.AnimalID and c.keeperID = k.keeperID LIMIT 0, 250 ;
+
+Send thank you note to each visitor
+SELECT ("Thank you for your attention") as " Thankyou Note”;
+
+
+
+
+
