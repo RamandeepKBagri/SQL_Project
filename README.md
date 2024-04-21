@@ -2,7 +2,7 @@ This is one of SQL Database design project for ITM/MSBA/304 class at Golden Gate
 
 # Name of the project:
 DESIGN DATABASE FOR ZOO
-ITM/MSBA/304
+submitted for completion of ITM/MSBA/304.
 
 # It was a team project:
 RAMANDEEP KAUR BAGRI | AMARPREET KAUR DHANOA
