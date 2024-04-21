@@ -1,7 +1,7 @@
 This is one of SQL Database design project for ITM/MSBA/304 class at Golden Gate University: 
 
 # Name of the project:
-DESIGN DATABASE FOR ZOO
+Design database for zoo
 submitted for completion of ITM/MSBA/304.
 
 # It was a team project:
